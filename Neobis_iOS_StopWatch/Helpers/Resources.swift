@@ -42,5 +42,11 @@ enum Resources {
             static var pauseButton = "pause.circle.fill"
             static var playButton = "play.circle.fill"
         }
+        
+        enum Tags {
+            case play
+            case stop
+            case pause
+        }
     }
 }

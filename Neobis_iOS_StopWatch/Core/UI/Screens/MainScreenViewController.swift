@@ -11,13 +11,16 @@ class MainScreenViewController: UIViewController {
     
     
     //MARK: Properties
-    
+    let timerService: TimerServiceProtocol = TimerService()
     var segmentedControl: UISegmentedControl!
     var timer: Timer?
     var totalSeconds = 0
-    let stopButton = TimerButton(imageName: Resources.Buttons.Names.stopButton)
-    let pauseButton = TimerButton(imageName: Resources.Buttons.Names.pauseButton)
-    let playButton = TimerButton(imageName: Resources.Buttons.Names.playButton)
+    let stopButton = TimerButton(imageName: Resources.Buttons.Names.stopButton,
+                                 action: #selector(stopTimer))
+    let pauseButton = TimerButton(imageName: Resources.Buttons.Names.pauseButton,
+                                  action: #selector(pauseTimer))
+    let playButton = TimerButton(imageName: Resources.Buttons.Names.playButton,
+                                 action: #selector(startTimer(sender:)))
     
     let logoImage: UIImageView = {
         let logo = UIImageView()
@@ -53,13 +56,13 @@ class MainScreenViewController: UIViewController {
         timeLabelSetup()
         buttonsStackSetup()
     }
-
-
+    
+    
 }
 
 //MARK: Views setup
 extension MainScreenViewController {
-  
+    
     func logoImageSetup() {
         view.addSubview(logoImage)
         
@@ -113,6 +116,7 @@ extension MainScreenViewController {
             stopButton, pauseButton, playButton,
         ])
         
+        
         view.addSubview(buttonsStack)
         
         buttonsStack.translatesAutoresizingMaskIntoConstraints = false
@@ -120,9 +124,9 @@ extension MainScreenViewController {
             buttonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor,
                                                   constant: Resources.Paddings.horizontalPadding),
             buttonsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-                                                  constant: -Resources.Paddings.horizontalPadding),
+                                                   constant: -Resources.Paddings.horizontalPadding),
             buttonsStack.bottomAnchor.constraint(equalTo: view.bottomAnchor,
-                                                  constant: -200),
+                                                 constant: -200),
             buttonsStack.heightAnchor.constraint(equalToConstant: 80),
         ])
     }
@@ -132,32 +136,32 @@ extension MainScreenViewController {
 //MARK: Methods setup
 extension MainScreenViewController {
     
-    func timerStart() {
-        timer = Timer.scheduledTimer(timeInterval: 1,
-                                     target: self,
-                                     selector: #selector(startTimer(sender:)),
-                                     userInfo: nil,
-                                     repeats: true)
-    }
-    
-    @objc func startTimer(sender: Timer) {
-        totalSeconds += 600
-        let seconds = totalSeconds % 60
-        let minutes = (totalSeconds / 60) % 60
-        let hours = (totalSeconds / 3600) % 24
+    func updateTimeLabel(hours: Int, minutes: Int, seconds: Int) {
         self.timeLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
-}
-
-//MARK: Segmented control
-extension MainScreenViewController {
     
-
+    @objc func startTimer(sender: UIButton) {
+        timerService.startTimer { hours, minutes, seconds in
+            self.updateTimeLabel(hours: hours, minutes: minutes, seconds: seconds)
+        }
+    }
+    
+    @objc func stopTimer() {
+        timerService.stopTimer { hours, minutes, seconds in
+            self.updateTimeLabel(hours: hours, minutes: minutes, seconds: seconds)
+        }
+    }
+    
+    @objc func pauseTimer() {
+        timerService.pauseTimer { hours, minutes, seconds in
+            self.updateTimeLabel(hours: hours, minutes: minutes, seconds: seconds)
+        }
+    }
     
     @objc func segmentDidChange(_ segmentedControl: UISegmentedControl) {
         switch segmentedControl.selectedSegmentIndex {
-        case 0: break
-            
+        case 0:
+            break
         case 1:
             print("stopwatch segment")
         default:

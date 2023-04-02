@@ -11,6 +11,7 @@
 		C6D34E9829D950FB00F769DB /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D34E9729D950FB00F769DB /* Resources.swift */; };
 		C6D34E9C29D9706400F769DB /* TimerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D34E9B29D9706400F769DB /* TimerButton.swift */; };
 		C6D34E9E29D971AE00F769DB /* UIStackView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D34E9D29D971AE00F769DB /* UIStackView+Extension.swift */; };
+		C6D34EA429D98F2200F769DB /* TimerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D34EA329D98F2200F769DB /* TimerService.swift */; };
 		C6E4A1E429D94ED500E7F772 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E4A1E329D94ED500E7F772 /* AppDelegate.swift */; };
 		C6E4A1E629D94ED500E7F772 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E4A1E529D94ED500E7F772 /* SceneDelegate.swift */; };
 		C6E4A1E829D94ED500E7F772 /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E4A1E729D94ED500E7F772 /* MainScreenViewController.swift */; };
@@ -43,6 +44,7 @@
 		C6D34E9729D950FB00F769DB /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		C6D34E9B29D9706400F769DB /* TimerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerButton.swift; sourceTree = "<group>"; };
 		C6D34E9D29D971AE00F769DB /* UIStackView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extension.swift"; sourceTree = "<group>"; };
+		C6D34EA329D98F2200F769DB /* TimerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerService.swift; sourceTree = "<group>"; };
 		C6E4A1E029D94ED500E7F772 /* Neobis_iOS_StopWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Neobis_iOS_StopWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6E4A1E329D94ED500E7F772 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6E4A1E529D94ED500E7F772 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 		C6D34EA029D97E6F00F769DB /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				C6D34EA329D98F2200F769DB /* TimerService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				C6D34E9C29D9706400F769DB /* TimerButton.swift in Sources */,
 				C6D34E9829D950FB00F769DB /* Resources.swift in Sources */,
 				C6D34E9629D950B300F769DB /* UIColor+Extension.swift in Sources */,
+				C6D34EA429D98F2200F769DB /* TimerService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
