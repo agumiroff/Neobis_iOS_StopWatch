@@ -18,8 +18,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
+        let screenWidth = windowScene.screen.bounds.width
+        let screenHeight = windowScene.screen.bounds.height
+        
         let timerService = TimerService()
         let view = MainScreenViewController()
+        
+        Resources.LayoutScreenSize.heightProportion = screenHeight/Resources.LayoutScreenSize.layoutHeight
+        Resources.LayoutScreenSize.widthProportion = screenWidth/Resources.LayoutScreenSize.layoutWidth
+        
+        print(Resources.LayoutScreenSize.heightProportion)
+        print(Resources.LayoutScreenSize.widthProportion)
         
         view.timerService = timerService
                 

@@ -10,43 +10,82 @@ import UIKit
 
 enum Resources {
     
-    enum Colors {
-        static var bgcolor = UIColor(RGB: [255,204,2])
+    enum LayoutScreenSize {
+        static let layoutWidth = 393.0
+        static let layoutHeight = 852.0
+        static var heightProportion = 0.0
+        static var widthProportion = 0.0
+    }
+    
+    enum ViewController {
+        enum Colors {
+            static let bgcolor = UIColor(RGB: [255,204,2])
+        }
+    }
+    
+    enum ButtonsStack {
+        static let buttonsStackTop = adoptSize(tag: .height,
+                                               size: 300.0)
+        static let buttonsheight = adoptSize(tag: .height,
+                                             size: 80.0)
+    }
+    
+    enum TimeLabel {
+        static let topAnchor = adoptSize(tag: .height,
+                                         size: 50.0)
+    }
+    
+    enum TimerImage {
+        static let width = adoptSize(tag: .width,
+                                     size: 100.0)
+        static let height = adoptSize(tag: .width,
+                                      size: 100.0)
     }
     
     enum SegmentedControl {
         
         enum Segments {
-            static var timerSegment = "Timer"
-            static var stopwatchSegment = "Stopwatch"
+            static let timerSegment = "Timer"
+            static let stopwatchSegment = "Stopwatch"
         }
         
         enum Sizes {
-            static var width = 200.0
-            static var height = 80.0
+            static let width = adoptSize(tag: .width,
+                                         size: 200.0)
+            static let height = adoptSize(tag: .height,
+                                          size: 80.0)
         }
     }
     
     enum Fonts {
-        static var fontName = "HelveticaNeue-Bold"
-        static var fontSize = 80.0
+        static let fontName = "HelveticaNeue-Bold"
+        static let fontSize = 80.0
     }
     
     enum Paddings {
-        static var horizontalPadding = 20.0
+        static let horizontalPadding = adoptSize(tag: .width,
+                                                 size: 20.0)
     }
     
     enum Buttons {
         enum Names {
-            static var stopButton = "stop.circle.fill"
-            static var pauseButton = "pause.circle.fill"
-            static var playButton = "play.circle.fill"
+            static let stopButton = "stop.circle.fill"
+            static let pauseButton = "pause.circle.fill"
+            static let playButton = "play.circle.fill"
         }
-        
-        enum Tags {
-            case play
-            case stop
-            case pause
+    }
+    
+    private enum AdoptSize {
+        case width
+        case height
+    }
+    
+    static private func adoptSize(tag: AdoptSize, size: Double) -> Double {
+        switch tag {
+        case .width:
+            return size * LayoutScreenSize.widthProportion
+        case .height:
+            return size * LayoutScreenSize.heightProportion
         }
     }
 }

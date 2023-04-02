@@ -56,11 +56,11 @@ class MainScreenViewController: UIViewController, UIScrollViewDelegate {
                             size: Resources.Fonts.fontSize)
         return label
     }()
-    
+
     //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Resources.Colors.bgcolor
+        view.backgroundColor = Resources.ViewController.Colors.bgcolor
         updateUI()
         setupViews()
         subscribeOnTimer()
@@ -114,8 +114,8 @@ extension MainScreenViewController {
             timerImage.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor,
                                            constant: 20),
             timerImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            timerImage.widthAnchor.constraint(equalToConstant: 100),
-            timerImage.heightAnchor.constraint(equalToConstant: 100),
+            timerImage.widthAnchor.constraint(equalToConstant: Resources.TimerImage.width),
+            timerImage.heightAnchor.constraint(equalToConstant: Resources.TimerImage.height),
         ])
     }
     
@@ -136,10 +136,10 @@ extension MainScreenViewController {
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             segmentedControl.topAnchor.constraint(equalTo: timerImage.bottomAnchor,
-                                                  constant: 20),
+                                                  constant: Resources.Paddings.horizontalPadding),
             segmentedControl.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            segmentedControl.heightAnchor.constraint(equalToConstant: 30),
-            segmentedControl.widthAnchor.constraint(equalToConstant: 200),
+            segmentedControl.heightAnchor.constraint(equalToConstant: Resources.SegmentedControl.Sizes.height),
+            segmentedControl.widthAnchor.constraint(equalToConstant: Resources.SegmentedControl.Sizes.width),
         ])
     }
     
@@ -150,7 +150,7 @@ extension MainScreenViewController {
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             timeLabel.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor,
-                                           constant: 50),
+                                           constant: Resources.TimeLabel.topAnchor),
             timeLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])
     }
@@ -175,8 +175,8 @@ extension MainScreenViewController {
             buttonsStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
                                                    constant: -Resources.Paddings.horizontalPadding),
             buttonsStack.topAnchor.constraint(equalTo: timeLabel.bottomAnchor,
-                                                 constant: 300),
-            buttonsStack.heightAnchor.constraint(equalToConstant: 80),
+                                              constant: Resources.ButtonsStack.buttonsStackTop),
+            buttonsStack.heightAnchor.constraint(equalToConstant: Resources.ButtonsStack.buttonsheight),
         ])
     }
     
