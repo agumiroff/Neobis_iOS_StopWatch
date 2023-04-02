@@ -8,67 +8,52 @@
 import Foundation
 
 protocol TimerServiceProtocol: AnyObject {
-    func startTimer(completion: @escaping (_ hours: Int,
-                                           _ minutes: Int,
-                                           _ seconds: Int) -> Void)
-    func stopTimer(completion: @escaping (_ hours: Int,
-                                          _ minutes: Int,
-                                          _ seconds: Int) -> Void)
-    func pauseTimer(completion: @escaping (_ hours: Int,
-                                           _ minutes: Int,
-                                           _ seconds: Int) -> Void)
-    
-    var seconds: Int { get set }
-    var minutes: Int { get set }
-    var hours: Int { get set }
+    func startTimer()
+    func stopTimer()
+    func pauseTimer()
+    var timeString: String { get set }
 }
 
 class TimerService: TimerServiceProtocol {
+    var timeString: String = "00:00:00"
     var totalSeconds = 0
-    var seconds = 0
-    var minutes = 0
-    var hours = 0
     var timer: Timer?
     var isPlaying = false
     
-    func startTimer(completion: @escaping (_ hours: Int,
-                                           _ minutes: Int,
-                                           _ seconds: Int) -> Void) {
+    func startTimer() {
         
         if isPlaying { return }
         isPlaying = true
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true)
         { [weak self] time in
             self?.totalSeconds += 1
-            self?.calculateTime()
-            completion(self!.hours, self!.minutes, self!.seconds)
+            self?.updateData(totalSeconds: self!.totalSeconds)
         }
     }
     
-    func stopTimer(completion: @escaping (_ hours: Int,
-                                          _ minutes: Int,
-                                          _ seconds: Int) -> Void) {
+    func stopTimer() {
         if totalSeconds == 0 { return }
         isPlaying = false
         totalSeconds = 0
-        calculateTime()
+        updateData(totalSeconds: self.totalSeconds)
         timer?.invalidate()
-        completion(self.hours, self.minutes, self.seconds)
     }
     
-    func pauseTimer(completion: @escaping (_ hours: Int,
-                                           _ minutes: Int,
-                                           _ seconds: Int) -> Void) {
+    func pauseTimer() {
         if !isPlaying { return }
         isPlaying = false
         timer?.invalidate()
-        completion(self.hours, self.minutes, self.seconds)
     }
     
-    func calculateTime() {
-        seconds = totalSeconds % 60
-        minutes = (totalSeconds / 60) % 60
-        hours = (totalSeconds / 3600) % 24
+    func updateData(totalSeconds: Int) {
+        let seconds = totalSeconds % 60
+        let minutes = (totalSeconds / 60) % 60
+        let hours = (totalSeconds / 3600) % 24
+        
+        timeString = String(format: "%02d:%02d:%02d",
+                                hours, minutes, seconds)
+        NotificationCenter.default.post(name: Notification.Name("totalSeconds"),
+                                        object: timeString)
     }
     
 }

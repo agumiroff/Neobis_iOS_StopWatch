@@ -7,14 +7,13 @@
 
 import UIKit
 
-class MainScreenViewController: UIViewController {
-    
-    
+class MainScreenViewController: UIViewController, UIScrollViewDelegate {
+      
     //MARK: Properties
-    let timerService: TimerServiceProtocol = TimerService()
+    var timerService: TimerServiceProtocol!
     var segmentedControl: UISegmentedControl!
     var timer: Timer?
-    var totalSeconds = 0
+    var totalSeconds = 1
     let stopButton = TimerButton(imageName: Resources.Buttons.Names.stopButton,
                                  action: #selector(stopTimer))
     let pauseButton = TimerButton(imageName: Resources.Buttons.Names.pauseButton,
@@ -22,7 +21,19 @@ class MainScreenViewController: UIViewController {
     let playButton = TimerButton(imageName: Resources.Buttons.Names.playButton,
                                  action: #selector(startTimer(sender:)))
     
-    let logoImage: UIImageView = {
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    private let contentView: UIView = {
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        return contentView
+    }()
+    
+    let timerImage: UIImageView = {
         let logo = UIImageView()
         logo.image = UIImage(systemName: "timer")
         logo.tintColor = .black
@@ -43,7 +54,6 @@ class MainScreenViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont(name: Resources.Fonts.fontName,
                             size: Resources.Fonts.fontSize)
-        label.text = "00:00:00"
         return label
     }()
     
@@ -51,31 +61,65 @@ class MainScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Resources.Colors.bgcolor
-        logoImageSetup()
-        segmentedControlSetup()
-        timeLabelSetup()
-        buttonsStackSetup()
+        updateUI()
+        setupViews()
+        subscribeOnTimer()
     }
     
     
 }
 
+
 //MARK: Views setup
 extension MainScreenViewController {
     
-    func logoImageSetup() {
-        view.addSubview(logoImage)
+    private func setupViews() {
+        setupScrollView()
+        timerImageSetup()
+        segmentedControlSetup()
+        timeLabelSetup()
+        buttonsStackSetup()
+    }
+    
+    //MARK: ScrollView setup
+    private func setupScrollView() {
         
-        logoImage.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.delegate = self
+        scrollView.isScrollEnabled = true
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
         NSLayoutConstraint.activate([
-            logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
-                                           constant: 20),
-            logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoImage.widthAnchor.constraint(equalToConstant: 100),
-            logoImage.heightAnchor.constraint(equalToConstant: 100),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            contentView.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor),
         ])
     }
     
+    //MARK: TimerImage setup
+    func timerImageSetup() {
+        contentView.addSubview(timerImage)
+        
+        timerImage.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            timerImage.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor,
+                                           constant: 20),
+            timerImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            timerImage.widthAnchor.constraint(equalToConstant: 100),
+            timerImage.heightAnchor.constraint(equalToConstant: 100),
+        ])
+    }
+    
+    //MARK: SegmentedControl setup
     func segmentedControlSetup() {
         let items = [
             Resources.SegmentedControl.Segments.timerSegment,
@@ -87,83 +131,86 @@ extension MainScreenViewController {
                                    for: .valueChanged)
         segmentedControl.selectedSegmentIndex = 0
         
-        view.addSubview(segmentedControl)
+        contentView.addSubview(segmentedControl)
         
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            segmentedControl.topAnchor.constraint(equalTo: logoImage.bottomAnchor,
+            segmentedControl.topAnchor.constraint(equalTo: timerImage.bottomAnchor,
                                                   constant: 20),
-            segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            segmentedControl.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             segmentedControl.heightAnchor.constraint(equalToConstant: 30),
             segmentedControl.widthAnchor.constraint(equalToConstant: 200),
         ])
     }
     
+    //MARK: timeLabel setup
     func timeLabelSetup() {
-        view.addSubview(timeLabel)
+        contentView.addSubview(timeLabel)
         
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             timeLabel.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor,
                                            constant: 50),
-            timeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            timeLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])
     }
     
+    func circleSliderSetup() {
+        
+    }
+    
+    //MARK: Buttons setup
     func buttonsStackSetup() {
         
         buttonsStack.addArrangedSubviews(subViews: [
             stopButton, pauseButton, playButton,
         ])
         
-        
-        view.addSubview(buttonsStack)
+        contentView.addSubview(buttonsStack)
         
         buttonsStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            buttonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+            buttonsStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
                                                   constant: Resources.Paddings.horizontalPadding),
-            buttonsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+            buttonsStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
                                                    constant: -Resources.Paddings.horizontalPadding),
-            buttonsStack.bottomAnchor.constraint(equalTo: view.bottomAnchor,
-                                                 constant: -200),
+            buttonsStack.topAnchor.constraint(equalTo: timeLabel.bottomAnchor,
+                                                 constant: 300),
             buttonsStack.heightAnchor.constraint(equalToConstant: 80),
         ])
     }
     
 }
 
-//MARK: Methods setup
+//MARK: Methods
 extension MainScreenViewController {
     
-    func updateTimeLabel(hours: Int, minutes: Int, seconds: Int) {
-        self.timeLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    private func subscribeOnTimer() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUI), name: NSNotification.Name("totalSeconds"), object: nil)
+    }
+    
+    @objc func updateUI() {
+        self.timeLabel.text = timerService.timeString
     }
     
     @objc func startTimer(sender: UIButton) {
-        timerService.startTimer { hours, minutes, seconds in
-            self.updateTimeLabel(hours: hours, minutes: minutes, seconds: seconds)
-        }
+        timerService.startTimer()
     }
     
     @objc func stopTimer() {
-        timerService.stopTimer { hours, minutes, seconds in
-            self.updateTimeLabel(hours: hours, minutes: minutes, seconds: seconds)
-        }
+        timerService.stopTimer()
     }
     
     @objc func pauseTimer() {
-        timerService.pauseTimer { hours, minutes, seconds in
-            self.updateTimeLabel(hours: hours, minutes: minutes, seconds: seconds)
-        }
+        timerService.pauseTimer()
     }
     
     @objc func segmentDidChange(_ segmentedControl: UISegmentedControl) {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
-            break
+            timerImage.image = UIImage(systemName: "timer")
         case 1:
-            print("stopwatch segment")
+            timerImage.image = UIImage(systemName: "stopwatch")
         default:
             break
         }
