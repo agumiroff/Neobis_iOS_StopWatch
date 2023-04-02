@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C6D34E9629D950B300F769DB /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D34E9529D950B300F769DB /* UIColor+Extension.swift */; };
+		C6D34E9829D950FB00F769DB /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D34E9729D950FB00F769DB /* Resources.swift */; };
+		C6D34E9C29D9706400F769DB /* TimerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D34E9B29D9706400F769DB /* TimerButton.swift */; };
+		C6D34E9E29D971AE00F769DB /* UIStackView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D34E9D29D971AE00F769DB /* UIStackView+Extension.swift */; };
 		C6E4A1E429D94ED500E7F772 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E4A1E329D94ED500E7F772 /* AppDelegate.swift */; };
 		C6E4A1E629D94ED500E7F772 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E4A1E529D94ED500E7F772 /* SceneDelegate.swift */; };
-		C6E4A1E829D94ED500E7F772 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E4A1E729D94ED500E7F772 /* ViewController.swift */; };
-		C6E4A1EB29D94ED500E7F772 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6E4A1E929D94ED500E7F772 /* Main.storyboard */; };
+		C6E4A1E829D94ED500E7F772 /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E4A1E729D94ED500E7F772 /* MainScreenViewController.swift */; };
 		C6E4A1ED29D94ED600E7F772 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6E4A1EC29D94ED600E7F772 /* Assets.xcassets */; };
 		C6E4A1F029D94ED600E7F772 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6E4A1EE29D94ED600E7F772 /* LaunchScreen.storyboard */; };
 		C6E4A1FB29D94ED700E7F772 /* Neobis_iOS_StopWatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E4A1FA29D94ED700E7F772 /* Neobis_iOS_StopWatchTests.swift */; };
@@ -36,11 +39,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C6D34E9529D950B300F769DB /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		C6D34E9729D950FB00F769DB /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		C6D34E9B29D9706400F769DB /* TimerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerButton.swift; sourceTree = "<group>"; };
+		C6D34E9D29D971AE00F769DB /* UIStackView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extension.swift"; sourceTree = "<group>"; };
 		C6E4A1E029D94ED500E7F772 /* Neobis_iOS_StopWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Neobis_iOS_StopWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6E4A1E329D94ED500E7F772 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6E4A1E529D94ED500E7F772 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C6E4A1E729D94ED500E7F772 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		C6E4A1EA29D94ED500E7F772 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C6E4A1E729D94ED500E7F772 /* MainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewController.swift; sourceTree = "<group>"; };
 		C6E4A1EC29D94ED600E7F772 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C6E4A1EF29D94ED600E7F772 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C6E4A1F129D94ED600E7F772 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -76,6 +82,64 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C6D34E9229D9509500F769DB /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C6D34E9A29D9704E00F769DB /* CuctomElements */,
+				C6D34E9329D9509600F769DB /* Screens */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		C6D34E9329D9509600F769DB /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				C6E4A1E729D94ED500E7F772 /* MainScreenViewController.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		C6D34E9429D950A700F769DB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C6D34E9529D950B300F769DB /* UIColor+Extension.swift */,
+				C6D34E9D29D971AE00F769DB /* UIStackView+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C6D34E9929D951FA00F769DB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C6D34E9729D950FB00F769DB /* Resources.swift */,
+				C6D34E9429D950A700F769DB /* Extensions */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		C6D34E9A29D9704E00F769DB /* CuctomElements */ = {
+			isa = PBXGroup;
+			children = (
+				C6D34E9B29D9706400F769DB /* TimerButton.swift */,
+			);
+			path = CuctomElements;
+			sourceTree = "<group>";
+		};
+		C6D34E9F29D97E6500F769DB /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				C6D34EA029D97E6F00F769DB /* Services */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		C6D34EA029D97E6F00F769DB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		C6E4A1D729D94ED500E7F772 = {
 			isa = PBXGroup;
 			children = (
@@ -99,13 +163,10 @@
 		C6E4A1E229D94ED500E7F772 /* Neobis_iOS_StopWatch */ = {
 			isa = PBXGroup;
 			children = (
-				C6E4A1E329D94ED500E7F772 /* AppDelegate.swift */,
-				C6E4A1E529D94ED500E7F772 /* SceneDelegate.swift */,
-				C6E4A1E729D94ED500E7F772 /* ViewController.swift */,
-				C6E4A1E929D94ED500E7F772 /* Main.storyboard */,
-				C6E4A1EC29D94ED600E7F772 /* Assets.xcassets */,
-				C6E4A1EE29D94ED600E7F772 /* LaunchScreen.storyboard */,
-				C6E4A1F129D94ED600E7F772 /* Info.plist */,
+				C6E4A21329D94EDD00E7F772 /* Application */,
+				C6D34E9929D951FA00F769DB /* Helpers */,
+				C6E4A21529D94EE800E7F772 /* Core */,
+				C6E4A21429D94EE400E7F772 /* SupportingFiles */,
 			);
 			path = Neobis_iOS_StopWatch;
 			sourceTree = "<group>";
@@ -125,6 +186,34 @@
 				C6E4A20629D94ED700E7F772 /* Neobis_iOS_StopWatchUITestsLaunchTests.swift */,
 			);
 			path = Neobis_iOS_StopWatchUITests;
+			sourceTree = "<group>";
+		};
+		C6E4A21329D94EDD00E7F772 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				C6E4A1E329D94ED500E7F772 /* AppDelegate.swift */,
+				C6E4A1E529D94ED500E7F772 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		C6E4A21429D94EE400E7F772 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				C6E4A1EC29D94ED600E7F772 /* Assets.xcassets */,
+				C6E4A1EE29D94ED600E7F772 /* LaunchScreen.storyboard */,
+				C6E4A1F129D94ED600E7F772 /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		C6E4A21529D94EE800E7F772 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				C6D34E9F29D97E6500F769DB /* Data */,
+				C6D34E9229D9509500F769DB /* UI */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,7 +322,6 @@
 			files = (
 				C6E4A1F029D94ED600E7F772 /* LaunchScreen.storyboard in Resources */,
 				C6E4A1ED29D94ED600E7F772 /* Assets.xcassets in Resources */,
-				C6E4A1EB29D94ED500E7F772 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,9 +346,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6E4A1E829D94ED500E7F772 /* ViewController.swift in Sources */,
+				C6E4A1E829D94ED500E7F772 /* MainScreenViewController.swift in Sources */,
+				C6D34E9E29D971AE00F769DB /* UIStackView+Extension.swift in Sources */,
 				C6E4A1E429D94ED500E7F772 /* AppDelegate.swift in Sources */,
 				C6E4A1E629D94ED500E7F772 /* SceneDelegate.swift in Sources */,
+				C6D34E9C29D9706400F769DB /* TimerButton.swift in Sources */,
+				C6D34E9829D950FB00F769DB /* Resources.swift in Sources */,
+				C6D34E9629D950B300F769DB /* UIColor+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,14 +389,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		C6E4A1E929D94ED500E7F772 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C6E4A1EA29D94ED500E7F772 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		C6E4A1EE29D94ED600E7F772 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -438,10 +522,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Neobis_iOS_StopWatch/Info.plist;
+				INFOPLIST_FILE = Neobis_iOS_StopWatch/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -465,10 +548,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Neobis_iOS_StopWatch/Info.plist;
+				INFOPLIST_FILE = Neobis_iOS_StopWatch/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
