@@ -79,7 +79,7 @@ enum Resources {
         case width
         case height
     }
-    
+    //converts size using proportion coefficient
     static private func adoptSize(tag: AdoptSize, size: Double) -> Double {
         switch tag {
         case .width:

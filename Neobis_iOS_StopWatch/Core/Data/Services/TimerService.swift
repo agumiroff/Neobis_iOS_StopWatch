@@ -67,20 +67,20 @@ class TimerService: TimerServiceProtocol {
         isPlaying = false
         timer?.invalidate()
     }
-    
+    //calculates total seconds from received timepicker's time
     private func calculateTotalSeconds() {
         self.totalSeconds += self.seconds
         self.totalSeconds += self.minutes * 60
         self.totalSeconds += self.hours * 3600
         convertSecondsInTime()
     }
-    
+    //converts current value of seconds in time formatted (hh:mm:ss)
     private func convertSecondsInTime() {
         self.seconds = totalSeconds % 60
         self.minutes = (totalSeconds / 60) % 60
         self.hours = (totalSeconds / 3600) % 24
     }
-    
+    //notifies observers to update UI with new values
     private func notifyObservers() {
         timeString = String(format: "%02d:%02d:%02d",
                                 hours, minutes, seconds)
