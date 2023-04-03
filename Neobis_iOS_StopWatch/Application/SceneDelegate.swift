@@ -26,10 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         Resources.LayoutScreenSize.heightProportion = screenHeight/Resources.LayoutScreenSize.layoutHeight
         Resources.LayoutScreenSize.widthProportion = screenWidth/Resources.LayoutScreenSize.layoutWidth
-        
-        print(Resources.LayoutScreenSize.heightProportion)
-        print(Resources.LayoutScreenSize.widthProportion)
-        
+                
         view.timerService = timerService
                 
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)

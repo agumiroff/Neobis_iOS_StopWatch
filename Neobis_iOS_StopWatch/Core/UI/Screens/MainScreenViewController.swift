@@ -8,8 +8,9 @@
 import UIKit
 
 class MainScreenViewController: UIViewController, UIScrollViewDelegate {
-      
+    
     //MARK: Properties
+    var isTimer = true
     var timerService: TimerServiceProtocol!
     var segmentedControl: UISegmentedControl!
     var timer: Timer?
@@ -20,27 +21,32 @@ class MainScreenViewController: UIViewController, UIScrollViewDelegate {
                                   action: #selector(pauseTimer))
     let playButton = TimerButton(imageName: Resources.Buttons.Names.playButton,
                                  action: #selector(startTimer(sender:)))
+    private let seconds = Array(1...59)
+    private let hours = Array(1...23)
+    
+    private let timePicker: UIPickerView = {
+        let picker = UIPickerView()
+        return picker
+    }()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
     
     private let contentView: UIView = {
         let contentView = UIView()
-        contentView.translatesAutoresizingMaskIntoConstraints = false
         return contentView
     }()
     
-    let timerImage: UIImageView = {
+    private let timerImage: UIImageView = {
         let logo = UIImageView()
         logo.image = UIImage(systemName: "timer")
         logo.tintColor = .black
         return logo
     }()
     
-    var buttonsStack: UIStackView = {
+    private var buttonsStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.spacing = 5
@@ -50,23 +56,67 @@ class MainScreenViewController: UIViewController, UIScrollViewDelegate {
         return stack
     }()
     
-    var timeLabel: UILabel = {
+    private var timeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: Resources.Fonts.fontName,
                             size: Resources.Fonts.fontSize)
         return label
     }()
-
+    
     //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Resources.ViewController.Colors.bgcolor
         updateUI()
         setupViews()
+        setupPickerView()
         subscribeOnTimer()
     }
     
     
+}
+
+//MARK: PickerView methods
+extension MainScreenViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        3
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        switch component {
+        case 0:
+            return hours.count
+        default:
+            return seconds.count
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        switch component {
+        case 0:
+            return String(hours.reversed()[row])
+        default:
+            return String(seconds.reversed()[row])
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch component {
+        case 0: //hours
+            timerService.setStopwatchTimer(hours: hours.reversed()[row],
+                                           minutes: nil,
+                                           seconds: nil)
+        case 1: //minutes
+            timerService.setStopwatchTimer(hours: nil,
+                                           minutes: seconds.reversed()[row],
+                                           seconds: nil)
+        default: //seconds
+            timerService.setStopwatchTimer(hours: nil,
+                                           minutes: nil,
+                                           seconds: seconds.reversed()[row])
+        }
+    }
 }
 
 
@@ -86,10 +136,12 @@ extension MainScreenViewController {
         
         scrollView.delegate = self
         scrollView.isScrollEnabled = true
-        
         view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
         
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        scrollView.addSubview(contentView)
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -105,6 +157,28 @@ extension MainScreenViewController {
         ])
     }
     
+    //MARK: PickerView setup
+    func setupPickerView() {
+        
+        timePicker.delegate = self
+        timePicker.dataSource = self
+        timePicker.isHidden = true
+        
+        contentView.addSubview(timePicker)
+        
+        timePicker.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            timePicker.topAnchor.constraint(equalTo: timeLabel.bottomAnchor,
+                                            constant: 20),
+            timePicker.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                                constant:  Resources.Paddings.horizontalPadding),
+            timePicker.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
+                                                 constant:  -Resources.Paddings.horizontalPadding),
+            timePicker.bottomAnchor.constraint(equalTo: buttonsStack.topAnchor,
+                                               constant:  -20)
+        ])
+    }
+    
     //MARK: TimerImage setup
     func timerImageSetup() {
         contentView.addSubview(timerImage)
@@ -112,7 +186,7 @@ extension MainScreenViewController {
         timerImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             timerImage.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor,
-                                           constant: 20),
+                                            constant: 20),
             timerImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             timerImage.widthAnchor.constraint(equalToConstant: Resources.TimerImage.width),
             timerImage.heightAnchor.constraint(equalToConstant: Resources.TimerImage.height),
@@ -151,7 +225,7 @@ extension MainScreenViewController {
         NSLayoutConstraint.activate([
             timeLabel.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor,
                                            constant: Resources.TimeLabel.topAnchor),
-            timeLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+            timeLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
         ])
     }
     
@@ -194,11 +268,13 @@ extension MainScreenViewController {
     }
     
     @objc func startTimer(sender: UIButton) {
-        timerService.startTimer()
+        timerService.startTimer(isTimer: isTimer)
+        timePicker.isUserInteractionEnabled = false
     }
     
     @objc func stopTimer() {
         timerService.stopTimer()
+        timePicker.isUserInteractionEnabled = true
     }
     
     @objc func pauseTimer() {
@@ -208,9 +284,15 @@ extension MainScreenViewController {
     @objc func segmentDidChange(_ segmentedControl: UISegmentedControl) {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
+            isTimer = true
+            stopTimer()
             timerImage.image = UIImage(systemName: "timer")
+            timePicker.isHidden = true
         case 1:
+            isTimer = false
+            stopTimer()
             timerImage.image = UIImage(systemName: "stopwatch")
+            timePicker.isHidden = false
         default:
             break
         }

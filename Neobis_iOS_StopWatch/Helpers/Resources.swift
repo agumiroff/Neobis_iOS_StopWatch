@@ -25,7 +25,7 @@ enum Resources {
     
     enum ButtonsStack {
         static let buttonsStackTop = adoptSize(tag: .height,
-                                               size: 300.0)
+                                               size: 200.0)
         static let buttonsheight = adoptSize(tag: .height,
                                              size: 80.0)
     }
@@ -53,13 +53,13 @@ enum Resources {
             static let width = adoptSize(tag: .width,
                                          size: 200.0)
             static let height = adoptSize(tag: .height,
-                                          size: 80.0)
+                                          size: 30.0)
         }
     }
     
     enum Fonts {
         static let fontName = "HelveticaNeue-Bold"
-        static let fontSize = 80.0
+        static let fontSize = 70.0
     }
     
     enum Paddings {
@@ -70,7 +70,7 @@ enum Resources {
     enum Buttons {
         enum Names {
             static let stopButton = "stop.circle.fill"
-            static let pauseButton = "pause.circle.fill"
+            static let pauseButton = "pause.circle"
             static let playButton = "play.circle.fill"
         }
     }
